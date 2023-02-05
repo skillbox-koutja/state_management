@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_domain/restaurant_domain.dart';
 
 void main() {
   runApp(
@@ -9,29 +10,7 @@ void main() {
   );
 }
 
-const List<Item> _items = [
-  Item(
-    name: 'Spinach Pizza',
-    totalPriceCents: 1299,
-    uid: '1',
-    imageProvider: NetworkImage('https://flutter'
-        '.dev/docs/cookbook/img-files/effects/split-check/Food1.jpg'),
-  ),
-  Item(
-    name: 'Veggie Delight',
-    totalPriceCents: 799,
-    uid: '2',
-    imageProvider: NetworkImage('https://flutter'
-        '.dev/docs/cookbook/img-files/effects/split-check/Food2.jpg'),
-  ),
-  Item(
-    name: 'Chicken Parmesan',
-    totalPriceCents: 1499,
-    uid: '3',
-    imageProvider: NetworkImage('https://flutter'
-        '.dev/docs/cookbook/img-files/effects/split-check/Food3.jpg'),
-  ),
-];
+const _dishes = ConstDishesRepository.allDishes;
 
 @immutable
 class ExampleDragAndDrop extends StatefulWidget {
@@ -43,32 +22,16 @@ class ExampleDragAndDrop extends StatefulWidget {
 
 class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
     with TickerProviderStateMixin {
-  final List<Customer> _people = [
-    Customer(
-      name: 'Nathan',
-      imageProvider: const NetworkImage('https://flutter'
-          '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
-    ),
-    Customer(
-      name: 'Makayla',
-      imageProvider: const NetworkImage('https://flutter'
-          '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg'),
-    ),
-    Customer(
-      name: 'Emilio',
-      imageProvider: const NetworkImage('https://flutter'
-          '.dev/docs/cookbook/img-files/effects/split-check/Avatar3.jpg'),
-    ),
-  ];
+  final _people = ConstCustomersRepository.allCustomers;
 
   final GlobalKey _draggableKey = GlobalKey();
 
   void _itemDroppedOnCustomerCart({
-    required Item item,
+    required Dish dish,
     required Customer customer,
   }) {
     setState(() {
-      customer.items.add(item);
+      customer.dishes.add(dish);
     });
   }
 
@@ -117,35 +80,35 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
   Widget _buildMenuList() {
     return ListView.separated(
       padding: const EdgeInsets.all(16.0),
-      itemCount: _items.length,
+      itemCount: _dishes.length,
       separatorBuilder: (context, index) {
         return const SizedBox(
           height: 12.0,
         );
       },
       itemBuilder: (context, index) {
-        final item = _items[index];
+        final dish = _dishes[index];
         return _buildMenuItem(
-          item: item,
+          dish: dish,
         );
       },
     );
   }
 
   Widget _buildMenuItem({
-    required Item item,
+    required Dish dish,
   }) {
-    return LongPressDraggable<Item>(
-      data: item,
+    return LongPressDraggable<Dish>(
+      data: dish,
       dragAnchorStrategy: pointerDragAnchorStrategy,
       feedback: DraggingListItem(
         dragKey: _draggableKey,
-        photoProvider: item.imageProvider,
+        photoProvider: dish.imageProvider,
       ),
       child: MenuListItem(
-        name: item.name,
-        price: item.formattedTotalItemPrice,
-        photoProvider: item.imageProvider,
+        name: dish.name,
+        price: dish.formattedTotalItemPrice,
+        photoProvider: dish.imageProvider,
       ),
     );
   }
@@ -168,17 +131,17 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
         padding: const EdgeInsets.symmetric(
           horizontal: 6.0,
         ),
-        child: DragTarget<Item>(
-          builder: (context, candidateItems, rejectedItems) {
+        child: DragTarget<Dish>(
+          builder: (context, candidateDishes, rejectedDishes) {
             return CustomerCart(
-              hasItems: customer.items.isNotEmpty,
-              highlighted: candidateItems.isNotEmpty,
+              hasDishes: customer.dishes.isNotEmpty,
+              highlighted: candidateDishes.isNotEmpty,
               customer: customer,
             );
           },
-          onAccept: (item) {
+          onAccept: (dish) {
             _itemDroppedOnCustomerCart(
-              item: item,
+              dish: dish,
               customer: customer,
             );
           },
@@ -189,16 +152,16 @@ class _ExampleDragAndDropState extends State<ExampleDragAndDrop>
 }
 
 class CustomerCart extends StatelessWidget {
+  final Customer customer;
+  final bool highlighted;
+  final bool hasDishes;
+
   const CustomerCart({
     super.key,
     required this.customer,
     this.highlighted = false,
-    this.hasItems = false,
+    this.hasDishes = false,
   });
-
-  final Customer customer;
-  final bool highlighted;
-  final bool hasItems;
 
   @override
   Widget build(BuildContext context) {
@@ -234,11 +197,11 @@ class CustomerCart extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: textColor,
                   fontWeight:
-                  hasItems ? FontWeight.normal : FontWeight.bold,
+                  hasDishes ? FontWeight.normal : FontWeight.bold,
                 ),
               ),
               Visibility(
-                visible: hasItems,
+                visible: hasDishes,
                 maintainState: true,
                 maintainAnimation: true,
                 maintainSize: true,
@@ -255,7 +218,7 @@ class CustomerCart extends StatelessWidget {
                     ),
                     const SizedBox(height: 4.0),
                     Text(
-                      '${customer.items.length} item${customer.items.length != 1 ? 's' : ''}',
+                      '${customer.dishes.length} item${customer.dishes.length != 1 ? 's' : ''}',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: textColor,
                         fontSize: 12.0,
@@ -263,7 +226,7 @@ class CustomerCart extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -273,6 +236,11 @@ class CustomerCart extends StatelessWidget {
 }
 
 class MenuListItem extends StatelessWidget {
+  final String name;
+  final String price;
+  final ImageProvider photoProvider;
+  final bool isDepressed;
+
   const MenuListItem({
     super.key,
     this.name = '',
@@ -280,11 +248,6 @@ class MenuListItem extends StatelessWidget {
     required this.photoProvider,
     this.isDepressed = false,
   });
-
-  final String name;
-  final String price;
-  final ImageProvider photoProvider;
-  final bool isDepressed;
 
   @override
   Widget build(BuildContext context) {
@@ -294,7 +257,6 @@ class MenuListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
@@ -345,14 +307,14 @@ class MenuListItem extends StatelessWidget {
 }
 
 class DraggingListItem extends StatelessWidget {
+  final GlobalKey dragKey;
+  final ImageProvider photoProvider;
+
   const DraggingListItem({
     super.key,
     required this.dragKey,
     required this.photoProvider,
   });
-
-  final GlobalKey dragKey;
-  final ImageProvider photoProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -374,39 +336,5 @@ class DraggingListItem extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-@immutable
-class Item {
-  const Item({
-    required this.totalPriceCents,
-    required this.name,
-    required this.uid,
-    required this.imageProvider,
-  });
-  final int totalPriceCents;
-  final String name;
-  final String uid;
-  final ImageProvider imageProvider;
-  String get formattedTotalItemPrice =>
-      '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
-}
-
-class Customer {
-  Customer({
-    required this.name,
-    required this.imageProvider,
-    List<Item>? items,
-  }) : items = items ?? [];
-
-  final String name;
-  final ImageProvider imageProvider;
-  final List<Item> items;
-
-  String get formattedTotalItemPrice {
-    final totalPriceCents =
-    items.fold<int>(0, (prev, item) => prev + item.totalPriceCents);
-    return '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
   }
 }
