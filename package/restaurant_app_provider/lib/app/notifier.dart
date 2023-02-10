@@ -26,7 +26,7 @@ class RestaurantProviderAppState with ChangeNotifier {
     notifyListeners();
   }
 
-  void makeOrder({required Customer customer, required Dish dish }) {
+  void makeOrder({required Customer customer, required Dish dish}) {
     customer.makeOrder(dish: dish);
 
     notifyListeners();

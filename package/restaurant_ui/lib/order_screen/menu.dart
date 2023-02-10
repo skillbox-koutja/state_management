@@ -13,7 +13,7 @@ class RestaurantOrderScreenMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('_Menu');
+    debugPrint('RestaurantOrderScreenMenu');
 
     return RestaurantMenu(
       itemCount: dishes.length,
@@ -39,7 +39,7 @@ class _MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('_MenuItem');
+    debugPrint('RestaurantOrderScreenMenu._MenuItem');
 
     return LongPressDraggable<Dish>(
       data: dish,

@@ -19,6 +19,7 @@ class RestaurantOrderScreenCustomers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('RestaurantCustomerRow');
     return RestaurantCustomerRow(
         customers: customers.map(
       (customer) {

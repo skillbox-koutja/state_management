@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app_provider/app/notifier.dart';
-import 'package:restaurant_domain/restaurant_domain.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:restaurant_app_riverpod/app/state_providers.dart';
 import 'package:restaurant_ui/restaurant_ui.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends HookConsumerWidget {
   const OrderScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('OrderScreen');
-    final isLoading = context.select<RestaurantProviderAppState, bool>((s) => s.isLoading);
+    final isLoading = ref.watch(loadingProvider);
 
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -23,7 +22,7 @@ class OrderScreen extends StatelessWidget {
         title: const RestaurantAppBarTitle(value: 'Order Food'),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(24.0),
-          child: RestaurantAppBarSubtitle(value: '(provider)'),
+          child: RestaurantAppBarSubtitle(value: '(riverpod)'),
         ),
         backgroundColor: RestaurantAppBar.backgroundColor,
         elevation: RestaurantAppBar.elevation,
@@ -55,25 +54,25 @@ class _Content extends StatelessWidget {
   }
 }
 
-class _Menu extends StatelessWidget {
+class _Menu extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('_Menu');
-    final dishes = context.select<RestaurantProviderAppState, List<Dish>>((s) => s.dishes);
+    final dishes = ref.watch(dishesProvider);
 
     return RestaurantOrderScreenMenu(dishes: dishes);
   }
 }
 
-class _Customers extends StatelessWidget {
+class _Customers extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final state = context.watch<RestaurantProviderAppState>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final customers = ref.watch(customersProvider);
     debugPrint('_Customers');
 
     return RestaurantOrderScreenCustomers(
-      customers: state.customers,
-      makeOrder: state.makeOrder,
+      customers: customers,
+      makeOrder: ref.read(customersProvider.notifier).makeOrder,
     );
   }
 }

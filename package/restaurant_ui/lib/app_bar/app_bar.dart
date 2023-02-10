@@ -7,21 +7,41 @@ abstract class RestaurantAppBar {
 }
 
 class RestaurantAppBarTitle extends StatelessWidget {
-  final String title;
+  final String value;
 
   const RestaurantAppBarTitle({
     super.key,
-    required this.title,
+    required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      title,
+      value,
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
         fontSize: 36,
         color: const Color(0xFFF64209),
         fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
+class RestaurantAppBarSubtitle extends StatelessWidget {
+  final String value;
+
+  const RestaurantAppBarSubtitle({
+    super.key,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      value,
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+        fontSize: 18,
+        color: const Color(0xFF595959),
       ),
     );
   }

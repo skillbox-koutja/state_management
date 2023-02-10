@@ -20,6 +20,7 @@ class RestaurantCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('RestaurantCustomerCard');
     final textColor = highlighted ? Colors.white : Colors.black;
 
     return Transform.scale(
