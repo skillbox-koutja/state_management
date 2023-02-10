@@ -5,8 +5,6 @@ abstract class DishesRepository {
   const DishesRepository();
 
   Future<List<Dish>> fetch();
-
-  Future<void> save(Dish dish);
 }
 
 class ConstDishesRepository extends DishesRepository {
@@ -41,10 +39,5 @@ class ConstDishesRepository extends DishesRepository {
     return Future.delayed(Duration(seconds: 1), () {
       return allDishes;
     });
-  }
-
-  @override
-  Future<void> save(Dish dish) async {
-    allDishes.add(dish);
   }
 }

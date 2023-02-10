@@ -209,7 +209,7 @@ class CustomerCart extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4.0),
                     Text(
-                      customer.formattedTotalItemPrice,
+                      customer.formattedDishesPrice,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: textColor,
                         fontSize: 16.0,
@@ -218,7 +218,7 @@ class CustomerCart extends StatelessWidget {
                     ),
                     const SizedBox(height: 4.0),
                     Text(
-                      '${customer.dishes.length} item${customer.dishes.length != 1 ? 's' : ''}',
+                      customer.dishesCounter,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: textColor,
                         fontSize: 12.0,
@@ -239,14 +239,12 @@ class MenuListItem extends StatelessWidget {
   final String name;
   final String price;
   final ImageProvider photoProvider;
-  final bool isDepressed;
 
   const MenuListItem({
     super.key,
     this.name = '',
     this.price = '',
     required this.photoProvider,
-    this.isDepressed = false,
   });
 
   @override
@@ -267,8 +265,8 @@ class MenuListItem extends StatelessWidget {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 100),
                     curve: Curves.easeInOut,
-                    height: isDepressed ? 115 : 120,
-                    width: isDepressed ? 115 : 120,
+                    height: 120,
+                    width: 120,
                     child: Image(
                       image: photoProvider,
                       fit: BoxFit.cover,

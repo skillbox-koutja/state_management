@@ -1,5 +1,4 @@
-name: restaurant_domain
-description: Domain package.
+name: restaurant_ui
 version: 0.0.1
 publish_to: none
 
@@ -10,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  restaurant_domain:
+    path: ../restaurant_domain
 
 dev_dependencies:
   flutter_test:

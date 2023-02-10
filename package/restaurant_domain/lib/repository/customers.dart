@@ -5,8 +5,6 @@ abstract class CustomersRepository {
   const CustomersRepository();
 
   Future<List<Customer>> fetch();
-
-  Future<void> save(Customer customer);
 }
 
 class ConstCustomersRepository extends CustomersRepository {
@@ -35,10 +33,5 @@ class ConstCustomersRepository extends CustomersRepository {
     return Future.delayed(Duration(seconds: 1), () {
       return allCustomers;
     });
-  }
-
-  @override
-  Future<void> save(Customer customer) async {
-    allCustomers.add(customer);
   }
 }

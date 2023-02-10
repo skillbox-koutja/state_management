@@ -7,11 +7,15 @@ environment:
   sdk: '>=2.19.0 <3.0.0'
 
 dependencies:
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  restaurant_app_provider:
+    path: package/restaurant_app_provider
   restaurant_domain:
     path: package/restaurant_domain
+  restaurant_ui:
+    path: package/restaurant_ui
 
 dev_dependencies:
   build_runner: ^2.3.3

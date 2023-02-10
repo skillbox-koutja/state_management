@@ -12,9 +12,15 @@ class Customer {
   final ImageProvider imageProvider;
   final List<Dish> dishes;
 
-  String get formattedTotalItemPrice {
+  String get formattedDishesPrice {
     final totalPriceCents = dishes.fold<int>(0, (prev, item) => prev + item.totalPriceCents);
 
     return '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
+  }
+
+  String get dishesCounter => '${dishes.length} item${dishes.length != 1 ? 's' : ''}';
+
+  void makeOrder({required Dish dish}) {
+    dishes.add(dish);
   }
 }
