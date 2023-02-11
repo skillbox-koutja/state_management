@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app_bloc/actions/actions.dart';
-import 'package:restaurant_app_bloc/blocs/customers_bloc.dart';
-import 'package:restaurant_app_bloc/blocs/order_screen_bloc.dart';
+import 'package:restaurant_app_bloc/flutter_blocs/customers_bloc.dart';
+import 'package:restaurant_app_bloc/flutter_blocs/order_screen_bloc.dart';
 import 'package:restaurant_app_bloc/states/order_screen_state.dart';
 import 'package:restaurant_domain/restaurant_domain.dart';
 import 'package:restaurant_ui/restaurant_ui.dart';

@@ -1,9 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app_bloc/actions/actions.dart';
-import 'package:restaurant_app_bloc/blocs/customers_bloc.dart';
-import 'package:restaurant_app_bloc/blocs/dishes_bloc.dart';
-import 'package:restaurant_app_bloc/states/customers_state.dart';
-import 'package:restaurant_app_bloc/states/dishes_state.dart';
+import 'package:restaurant_app_bloc/flutter_blocs/customers_bloc.dart';
+import 'package:restaurant_app_bloc/flutter_blocs/dishes_bloc.dart';
 import 'package:restaurant_app_bloc/states/order_screen_state.dart';
 
 class OrderScreenBloc extends Bloc<Action, OrderScreenState> {
