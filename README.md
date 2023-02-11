@@ -5,8 +5,8 @@
 - [x] Реализуйте управление состоянием, используя Simple State Management.
 - [ ] Реализуйте управление состоянием, используя flutter_riverpod.
 - [x] Реализуйте управление состоянием, используя hooks_riverpod.
-- [ ] Реализуйте управление состоянием, используя flutter_bloc с помощью блока и с помощью кубита.
-- [ ] Создайте собственный bloc, используя StreamController, реализуйте управление состоянием с помощью него.
+- [x] Реализуйте управление состоянием, используя flutter_bloc с помощью блока и с помощью кубита.
+- [x] Создайте собственный bloc, используя StreamController, реализуйте управление состоянием с помощью него.
 - [ ] Реализуйте управление состоянием с помощью flutter_redux.
 - [ ] Усложнённое. Реализуйте управление состоянием с помощью fish_redux.
 - [x] Реализуйте управление состоянием с помощью flutter_mobx.
@@ -30,5 +30,12 @@ flutter pub run build_runner build
 
 ```bash
 cd package/restaurant_app_domain
+flutter pub run build_runner build
+```
+
+Для restaurant_app_domain нужно запустить кодогенерацию
+
+```bash
+cd package/restaurant_app_redux
 flutter pub run build_runner build
 ```

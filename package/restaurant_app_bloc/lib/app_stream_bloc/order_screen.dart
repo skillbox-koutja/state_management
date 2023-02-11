@@ -49,7 +49,12 @@ class _OrderScreenState extends State<OrderScreen> {
             return _Content(
               dishes: data.dishesState.dishes,
               customers: data.customersState.customers,
-              makeOrder: data.customersState.makeOrder,
+              makeOrder: ({
+                required customer,
+                required dish,
+              }) {
+                _bloc.action.add(CustomersMakeOrderAction(customer: customer, dish: dish));
+              },
             );
           }
 

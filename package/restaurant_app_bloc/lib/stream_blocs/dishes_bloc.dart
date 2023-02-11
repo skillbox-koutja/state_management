@@ -24,7 +24,7 @@ class DishesStreamBloc {
   }
 
   Future<void> _handleAction(Action action) async {
-    if (action is LoadCustomersAction) {
+    if (action is LoadDishesAction) {
       try {
         _currentState = _currentState.startFetching();
 
@@ -34,5 +34,7 @@ class DishesStreamBloc {
         _currentState = _currentState.errorFetching('Fetching dishes is failed');
       }
     }
+
+    _stateController.add(_currentState);
   }
 }

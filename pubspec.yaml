@@ -16,6 +16,8 @@ dependencies:
     path: package/restaurant_app_mobx
   restaurant_app_provider:
     path: package/restaurant_app_provider
+  restaurant_app_redux:
+    path: package/restaurant_app_redux
   restaurant_app_riverpod:
     path: package/restaurant_app_riverpod
   restaurant_domain:

@@ -8,8 +8,6 @@ abstract class DishesRepository {
 }
 
 class ConstDishesRepository extends DishesRepository {
-  const ConstDishesRepository();
-
   static const allDishes = <Dish>[
     Dish(
       name: 'Spinach Pizza',
@@ -34,9 +32,11 @@ class ConstDishesRepository extends DishesRepository {
     ),
   ];
 
+  const ConstDishesRepository();
+
   @override
   Future<List<Dish>> fetch() async {
-    return Future.delayed(Duration(seconds: 1), () {
+    return Future.delayed(const Duration(seconds: 1), () {
       return allDishes;
     });
   }

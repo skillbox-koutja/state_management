@@ -8,29 +8,29 @@ abstract class CustomersRepository {
 }
 
 class ConstCustomersRepository extends CustomersRepository {
-  const ConstCustomersRepository();
-
   static final allCustomers = <Customer>[
-    Customer(
+    const Customer(
       name: 'Nathan',
-      imageProvider: const NetworkImage('https://flutter'
+      imageProvider: NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar2.jpg'),
     ),
-    Customer(
+    const Customer(
       name: 'Makayla',
-      imageProvider: const NetworkImage('https://flutter'
+      imageProvider: NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg'),
     ),
-    Customer(
+    const Customer(
       name: 'Emilio',
-      imageProvider: const NetworkImage('https://flutter'
+      imageProvider: NetworkImage('https://flutter'
           '.dev/docs/cookbook/img-files/effects/split-check/Avatar3.jpg'),
     ),
   ];
 
+  const ConstCustomersRepository();
+
   @override
   Future<List<Customer>> fetch() {
-    return Future.delayed(Duration(seconds: 1), () {
+    return Future.delayed(const Duration(seconds: 1), () {
       return allCustomers;
     });
   }

@@ -39,5 +39,7 @@ class CustomersStreamBloc {
         dish: action.dish,
       );
     }
+
+    _stateController.add(_currentState);
   }
 }
