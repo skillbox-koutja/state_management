@@ -9,8 +9,8 @@ class OrderScreenState {
   bool get isLoading => dishesState.isLoading && customersState.isLoading;
 
   OrderScreenState({
-    required this.dishesState,
-    required this.customersState,
+    this.dishesState = const DishesState(),
+    this.customersState = const CustomersState(),
   });
 
   OrderScreenState copyWith({
