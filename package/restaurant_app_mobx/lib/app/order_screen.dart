@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:restaurant_app_riverpod/app/state_providers.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app_mobx/app/state.dart';
 import 'package:restaurant_ui/restaurant_ui.dart';
 
-class OrderScreen extends HookConsumerWidget {
+class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     debugPrint('OrderScreen');
-    final isLoading = ref.watch(loadingProvider);
-
-    if (isLoading) {
-      return const RestaurantLoader();
-    }
+    final state = Provider.of<RestaurantAppState>(context);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
@@ -22,12 +19,14 @@ class OrderScreen extends HookConsumerWidget {
         title: const RestaurantAppBarTitle(value: 'Order Food'),
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(24.0),
-          child: RestaurantAppBarSubtitle(value: '(riverpod)'),
+          child: RestaurantAppBarSubtitle(value: '(mobx)'),
         ),
         backgroundColor: RestaurantAppBar.backgroundColor,
         elevation: RestaurantAppBar.elevation,
       ),
-      body: _Content(),
+      body: Observer(
+        builder: (_) => state.isLoading ? const RestaurantLoader() : _Content(),
+      ),
     );
   }
 }
@@ -54,25 +53,29 @@ class _Content extends StatelessWidget {
   }
 }
 
-class _Menu extends HookConsumerWidget {
+class _Menu extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     debugPrint('_Menu');
-    final dishes = ref.watch(dishesProvider);
+    final state = Provider.of<RestaurantAppState>(context);
 
-    return RestaurantOrderScreenMenu(dishes: dishes);
+    return Observer(
+      builder: (_) => RestaurantOrderScreenMenu(dishes: state.dishes),
+    );
   }
 }
 
-class _Customers extends HookConsumerWidget {
+class _Customers extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final customers = ref.watch(customersProvider);
+  Widget build(BuildContext context) {
+    final state = Provider.of<RestaurantAppState>(context);
     debugPrint('_Customers');
 
-    return RestaurantOrderScreenCustomers(
-      customers: customers,
-      makeOrder: ref.read(customersProvider.notifier).makeOrder,
+    return Observer(
+      builder: (_) => RestaurantOrderScreenCustomers(
+        customers: state.customers,
+        makeOrder: state.makeOrder,
+      ),
     );
   }
 }

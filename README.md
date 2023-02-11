@@ -9,4 +9,12 @@
 - [ ] Создайте собственный bloc, используя StreamController, реализуйте управление состоянием с помощью него.
 - [ ] Реализуйте управление состоянием с помощью flutter_redux.
 - [ ] Усложнённое. Реализуйте управление состоянием с помощью fish_redux.
-- [ ] Реализуйте управление состоянием с помощью flutter_mobx.
+- [x] Реализуйте управление состоянием с помощью flutter_mobx.
+
+
+Для restaurant_app_mobx нужно запустить кодогенерацию
+
+```bash
+cd package/restaurant_app_mobx
+flutter pub run build_runner build
+```

@@ -13,7 +13,7 @@ class OrderScreen extends StatelessWidget {
     final isLoading = context.select<RestaurantProviderAppState, bool>((s) => s.isLoading);
 
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const RestaurantLoader();
     }
 
     return Scaffold(

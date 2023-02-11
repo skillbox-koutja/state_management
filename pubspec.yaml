@@ -10,6 +10,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  restaurant_app_mobx:
+    path: package/restaurant_app_mobx
   restaurant_app_provider:
     path: package/restaurant_app_provider
   restaurant_app_riverpod:
