@@ -1,17 +1,11 @@
-import 'package:restaurant_domain/model/dish.dart';
 import 'package:flutter/painting.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:restaurant_domain/model/dish.dart';
 
-class Customer {
-  Customer({
-    required this.name,
-    required this.imageProvider,
-    List<Dish>? dishes,
-  }) : dishes = dishes ?? <Dish>[];
+part 'customer.freezed.dart';
 
-  final String name;
-  final ImageProvider imageProvider;
-  final List<Dish> dishes;
-
+@freezed
+class Customer with _$Customer {
   String get formattedDishesPrice {
     final totalPriceCents = dishes.fold<int>(0, (prev, item) => prev + item.totalPriceCents);
 
@@ -20,7 +14,15 @@ class Customer {
 
   String get dishesCounter => '${dishes.length} item${dishes.length != 1 ? 's' : ''}';
 
-  void makeOrder({required Dish dish}) {
-    dishes.add(dish);
+  const factory Customer({
+    required String name,
+    required ImageProvider imageProvider,
+    @Default(<Dish>[]) List<Dish> dishes,
+  }) = _Customer;
+
+  const Customer._();
+
+  Customer makeOrder({required Dish dish}) {
+    return copyWith(dishes: [...dishes, dish]);
   }
 }

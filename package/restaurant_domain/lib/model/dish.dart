@@ -1,17 +1,18 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-class Dish {
-  const Dish({
-    required this.totalPriceCents,
-    required this.name,
-    required this.uid,
-    required this.imageProvider,
-  });
-  final int totalPriceCents;
-  final String name;
-  final String uid;
-  final ImageProvider imageProvider;
+part 'dish.freezed.dart';
+
+@freezed
+class Dish with _$Dish {
   String get formattedTotalItemPrice => '\$${(totalPriceCents / 100.0).toStringAsFixed(2)}';
+
+  const factory Dish({
+    required String uid,
+    required String name,
+    required int totalPriceCents,
+    required ImageProvider imageProvider,
+  }) = _Dish;
+
+  const Dish._();
 }

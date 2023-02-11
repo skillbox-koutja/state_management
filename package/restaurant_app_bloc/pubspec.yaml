@@ -1,5 +1,5 @@
-name: restaurant_domain
-description: Domain package.
+name: restaurant_app_bloc
+description: A new Flutter package project.
 version: 0.0.1
 publish_to: none
 
@@ -10,7 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.2
   freezed_annotation: ^2.2.0
+  restaurant_domain:
+    path: ../restaurant_domain
+  restaurant_ui:
+    path: ../restaurant_ui
 
 dev_dependencies:
   build_runner: ^2.3.3

@@ -18,3 +18,17 @@
 cd package/restaurant_app_mobx
 flutter pub run build_runner build
 ```
+
+Для restaurant_app_bloc нужно запустить кодогенерацию
+
+```bash
+cd package/restaurant_app_bloc
+flutter pub run build_runner build
+```
+
+Для restaurant_app_domain нужно запустить кодогенерацию
+
+```bash
+cd package/restaurant_app_domain
+flutter pub run build_runner build
+```
